@@ -185,7 +185,7 @@ public class BattleBotArena extends JPanel implements MouseListener, MouseWheelL
     /**
      * Set to TRUE for debugging output
      */
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     //***********************************************
     // MAIN SET OF CONSTANTS AVAILABLE TO THE BOTS...
@@ -621,7 +621,7 @@ public class BattleBotArena extends JPanel implements MouseListener, MouseWheelL
         // *** as the bots will be shuffled again later.
         // *** Any empty spots will be filled with standard arena bots.
        
-        bots[1] = new MyBot();
+        //bots[1] = new MyBot();<== EXAMPLE OF CALLING BOT CONTRUCTOR
 
         // *******************************    
         // Remaining slots filled with Drones, RandBots, and sentryBots.
@@ -632,17 +632,17 @@ public class BattleBotArena extends JPanel implements MouseListener, MouseWheelL
             if (bots[i] == null)
             {
                 
-                if (c%i==1)
+                if (c%i==1){
                     bots[i] = new Drone();
-              else if (c==2){
+                }
+                else if (c==2){
                     bots[i] = new RandBot();
-              }
-              else
-                {
+               }
+               else{
                     bots[i] = new SentryBot();
                     c=0;
-                }
-                c++;
+               }
+               c++;
             }
       
         }
