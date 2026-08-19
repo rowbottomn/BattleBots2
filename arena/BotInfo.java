@@ -1,10 +1,6 @@
 package arena;
+
 import java.text.DecimalFormat;
-import java.util.Iterator;
-import java.util.LinkedList;
-
-import bots.Bot;
-
 
 /**
  * This class exists to hold all the important info about a Bot in one place.

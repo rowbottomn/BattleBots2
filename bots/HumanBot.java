@@ -1,14 +1,11 @@
 package bots;
 
+import arena.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import arena.BattleBotArena;
-import arena.BotInfo;
-import arena.Bullet;
 
 /**
  * The HumanBot is a Bot that is under human control and should only be used for test purposes (e.g.
@@ -21,146 +18,193 @@ import arena.Bullet;
  *
  * @author Sam Scott
  * @version 1.0 (March 3, 2011)
- *
+ * @version 1.1 (Jul 09, 2026) Added new stop key command to stop the bot from continuing to move in the last keyed direction. For testing
  */
 
 public class HumanBot extends Bot implements KeyListener {
 
-	private int move = BattleBotArena.STAY;
-	private int resume;
-	private boolean cocked = true;
-	private String msg = null;
+    private int move = BattleBotArena.STAY;
+    private int resume;
+    private boolean cocked = true;
+    private String msg = null;
 
-	public HumanBot() {
-		// TODO Auto-generated constructor stub
-			
-	}
+        public HumanBot() {
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public void draw(Graphics g, int x, int y) {
-		// TODO Auto-generated method stub
-		g.setColor(Color.white);
-		g.fillRect(x+2, y+2, RADIUS*2-4, RADIUS*2-4);
-		if (!cocked)
-		{
-			g.setColor(Color.red);
-			g.fillRect(x+3, y+3, RADIUS*2-6, RADIUS*2-6);
-		}
-	}
+    /** 
+     * @param g
+     * @param x
+     * @param y
+     */
+    @Override
+    public void draw(Graphics g, int x, int y) {
+        // TODO Auto-generated method stub
+        g.setColor(Color.white);
+        g.fillRect(x+2, y+2, RADIUS*2-4, RADIUS*2-4);
+        if (!cocked)
+        {
+            g.setColor(Color.red);
+            g.fillRect(x+3, y+3, RADIUS*2-6, RADIUS*2-6);
+        }
+    }
 
-	@Override
-	public int getMove(BotInfo me, boolean shotOK, BotInfo[] liveBots,
-			BotInfo[] deadBots, Bullet[] bullets) {
-		if (msg != null)
-			return BattleBotArena.SEND_MESSAGE;
-		cocked = shotOK;
-		int moveNow = move;
-		move = resume;
-		return moveNow;
-	}
+    /** 
+     * @param me
+     * @param shotOK
+     * @param liveBots
+     * @param deadBots
+     * @param bullets
+     * @return int
+     */
+    @Override
+    public int getMove(BotInfo me, boolean shotOK, BotInfo[] liveBots,
+            BotInfo[] deadBots, Bullet[] bullets) {
+        if (msg != null)
+            return BattleBotArena.SEND_MESSAGE;
+        cocked = shotOK;
+        int moveNow = move;
+        move = resume;
+        return moveNow;
+    }
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "Human";
-	}
+    /** 
+     * @return String
+     */
+    @Override
+    public String getName() {
+        // TODO Auto-generated method stub
+        return "Human";
+    }
 
-	@Override
-	public String getTeamName() {
-		// TODO Auto-generated method stub
-		return "";
-	}
+    /** 
+     * @return String
+     */
+    @Override
+    public String getTeamName() {
+        // TODO Auto-generated method stub
+        return "";
+    }
 
-	@Override
-	public String[] imageNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}	
+    /** 
+     * @return String[]
+     */
+    @Override
+    public String[] imageNames() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public void incomingMessage(int botNum, String msg) {
-		// TODO Auto-generated method stub
+    /** 
+     * @param botNum
+     * @param msg
+     */
+    @Override
+    public void incomingMessage(int botNum, String msg) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void loadedImages(Image[] images) {
-		// TODO Auto-generated method stub
+    /** 
+     * @param images
+     */
+    @Override
+    public void loadedImages(Image[] images) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void newRound() {
-		msg="Arrow keys to move, WASD or CTRL to fire. Good luck!";
-	}
+    @Override
+    public void newRound() {
+        msg="Arrow keys to move, WASD or CTRL to fire. Press space to stop. Good luck!";
+    }
 
-	@Override
-	public String outgoingMessage() {
-		// TODO Auto-generated method stub
-		String x = msg;
-		msg = null;
-		return x;
-	}
+    /** 
+     * @return String
+     */
+    @Override
+    public String outgoingMessage() {
+        // TODO Auto-generated method stub
+        String x = msg;
+        msg = null;
+        return x;
+    }
 
-	public void keyPressed(KeyEvent e) {
-		//System.out.println(e.getKeyCode());
-		switch (e.getKeyCode())
-		{
-		case KeyEvent.VK_UP:
-			move = BattleBotArena.UP;
-			resume = move;
-			break;
-		case KeyEvent.VK_DOWN:
-			move = BattleBotArena.DOWN;
-			resume = move;
-			break;
-		case KeyEvent.VK_LEFT:
-			move = BattleBotArena.LEFT;
-			resume = move;
-			break;
-		case KeyEvent.VK_RIGHT:
-			move = BattleBotArena.RIGHT;
-			resume = move;
-			break;
-		case KeyEvent.VK_CONTROL:
-			resume = move;
-			if (move == BattleBotArena.UP)
-				move = BattleBotArena.FIREUP;
-			else if (move == BattleBotArena.DOWN)
-				move = BattleBotArena.FIREDOWN;
-			else if (move == BattleBotArena.LEFT)
-				move = BattleBotArena.FIRELEFT;
-			else if (move == BattleBotArena.RIGHT)
-				move = BattleBotArena.FIRERIGHT;
-			break;
-		case 'W':
-			resume = move;
-			move = BattleBotArena.FIREUP;
-			break;
-		case 'A':
-			resume = move;
-			move = BattleBotArena.FIRELEFT;
-			break;
-		case 'S':
-			resume = move;
-			move = BattleBotArena.FIREDOWN;
-			break;
-		case 'D':
-			resume = move;
-			move = BattleBotArena.FIRERIGHT;
-			break;
-		}
+    /** 
+     * @param e
+     */
+    @Override
+    public void keyPressed(KeyEvent e) {
+        //System.out.println(e.getKeyCode());
+        switch (e.getKeyCode())
+        {
+        case KeyEvent.VK_UP:
+            move = BattleBotArena.UP;
+            resume = move;
+            break;
+        case KeyEvent.VK_DOWN:
+            move = BattleBotArena.DOWN;
+            resume = move;
+            break;
+        case KeyEvent.VK_LEFT:
+            move = BattleBotArena.LEFT;
+            resume = move;
+            break;
+        case KeyEvent.VK_RIGHT:
+            move = BattleBotArena.RIGHT;
+            resume = move;
+            break;
+        case KeyEvent.VK_CONTROL:
+            resume = move;
+            if (move == BattleBotArena.UP)
+                move = BattleBotArena.FIREUP;
+            else if (move == BattleBotArena.DOWN)
+                move = BattleBotArena.FIREDOWN;
+            else if (move == BattleBotArena.LEFT)
+                move = BattleBotArena.FIRELEFT;
+            else if (move == BattleBotArena.RIGHT)
+                move = BattleBotArena.FIRERIGHT;
+            break;
+        case 'W':
+            resume = move;
+            move = BattleBotArena.FIREUP;
+            break;
+        case 'A':
+            resume = move;
+            move = BattleBotArena.FIRELEFT;
+            break;
+        case 'S':
+            resume = move;
+            move = BattleBotArena.FIREDOWN;
+            break;
+        case 'D':
+            resume = move;
+            move = BattleBotArena.FIRERIGHT;
+            break;
+        case KeyEvent.VK_SPACE:
+            move = BattleBotArena.STAY;
+            resume = move;
+            break;
+        }
 
-	}
+    }
 
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+    /** 
+     * @param arg0
+     */
+    @Override
+    public void keyReleased(KeyEvent arg0) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+    /** 
+     * @param arg0
+     */
+    @Override
+    public void keyTyped(KeyEvent arg0) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
 }
