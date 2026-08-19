@@ -1,11 +1,11 @@
-PROJECT TITLE: ArenaBot
-PURPOSE OF PROJECT: 
-VERSION or DATE: July 08 2026   
-HOW TO START THIS PROJECT: java BattleBotArena.java
-AUTHORS: Nathan Rowbottom, Sam Scott
+PROJECT TITLE: ArenaBot. 
+PURPOSE OF PROJECT: Working with Objects and OOP concepts, Abstract Class, Interfaces. 
+VERSION or DATE: July 08 2026.    
+HOW TO START THIS PROJECT: java BattleBotArena.java. 
+AUTHORS: Nathan Rowbottom, Sam Scott. 
 
 COMPETITOR INSTRUCTIONS:
-1. Clone or download the following git repo BattleBots **need this link**
+1. Clone or download the following git repo BattleBots 
 2. Run the BattleBotArena.java program to make sure the default setting are acceptable on your screen (and the most people's).
 3. Create a your Bot program by making a .java file and extending the Bot class.
 4. Add in all the appropriate concrete method stubs as required by the abstract method signatures.
